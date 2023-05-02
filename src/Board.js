@@ -1,45 +1,57 @@
-import React, { useEffect, useRef, useState } from "react";
+// Importing the CSS for the board
+import "./css/board.css";
+
+// Importing the useState hook, useEffect hook and useRef hook
+import { useState, useEffect, useRef } from "react";
 
 const Board = ({ reset, setReset, winner, setWinner }) => {
-  //creating the turn state indicate current turn
+  // Creating a turn state, which indicates the current turn
   const [turn, setTurn] = useState(0);
-  //create the data state,which contain current picture of the board
+
+  // Creating a data state, which contains the
+  // current picture of the board
   const [data, setData] = useState(["", "", "", "", "", "", "", "", ""]);
-  //creating the reference for the board
+
+  // Creating a reference for the board
   const boardRef = useRef(null);
 
-  //function to draw on the board
+  // Function to draw on the board
   const draw = (event, index) => {
-    //Draw  only if the position is not taken and winner is not decide yet
+    // Draws only if the position is not taken
+    // and winner is not decided yet
     if (data[index - 1] === "" && winner === "") {
-      //Draw X if it's player 1's turn else draws O
+      // Draws X if it's player 1's turn else draws O
       const current = turn === 0 ? "X" : "O";
 
-      //updating the data state
+      // Updating the data state
       data[index - 1] = current;
 
-      //drawing on the board
+      //Drawing on the board
       event.target.innerText = current;
 
-      //switching the turn
+      // Switching the turn
       setTurn(turn === 0 ? 1 : 0);
     }
   };
 
-  // UseEffect hook used to reset the board whenever a winner is decided
+  // UseEffect hook used to reset the board whenever
+  // a winner is decided
   useEffect(() => {
     // Clearing the data state
     setData(["", "", "", "", "", "", "", "", ""]);
+
     // Getting all the children(cells) of the board
     const cells = boardRef.current.children;
-    //clearing out the board
+
+    // Clearing out the board
     for (let i = 0; i < 9; i++) {
-      cells[i].innerText = " ";
+      cells[i].innerText = "";
     }
-    //Resetting the turn player 0
+
+    // Resetting the turn to player 0
     setTurn(0);
 
-    //Resetting the winner
+    // Resetting the winner
     setWinner("");
     setReset(false);
   }, [reset, setReset, setWinner]);
