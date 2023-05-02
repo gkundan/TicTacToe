@@ -30,6 +30,7 @@ function App() {
         <button onClick={() => resetBoard()}>Reset Board</button>
       </div>
       {/* tic-tac-toe board  */}
+
       <Board
         reset={reset}
         setReset={setReset}
